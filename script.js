@@ -46,9 +46,8 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-//   document.querySelector('.cart__items')
 function cartItemClickListener(event) {
-//
+  document.querySelector('.cart__items').remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -61,7 +60,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 const cartList = async (itemId) => {
   const cartItems = document.querySelector('.cart__items');
   const items = await fetchItem(itemId);
-  
+
   const { id, title, price } = items;
   const cartDetails = {
     sku: id,

@@ -18,4 +18,8 @@ describe('1 - Teste a função fecthProducts', () => {
     expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   });
 
+  it('check if fetchProducts function using `computer` as an argument has the same data structure as `computerSearch` object', async () => {
+    await fetchProducts('computador');
+    expect(await fetchProducts('computador')).toEqual(computadorSearch.results);
+  });
 });

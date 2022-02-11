@@ -7,4 +7,8 @@ describe('2 - Teste a função fecthItem', () => {
     expect(typeof fetchItem).toBe('function');
   });
 
+  it('should call fetch', async () => {
+    await fetchItem('MLB1615760527');
+    expect(fetch).toBeCalled()
+  });
 });

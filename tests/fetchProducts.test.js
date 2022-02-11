@@ -22,4 +22,14 @@ describe('1 - Teste a função fecthProducts', () => {
     await fetchProducts('computador');
     expect(await fetchProducts('computador')).toEqual(computadorSearch.results);
   });
+
+  it('check if calling fetchProduct function with no parameter returns the following error: `You must provide an url`', async () => {
+   try { 
+     await fetchProducts();
+   } catch (error) {
+   expect(error.message).toEqual(new Error('You must provide an url'));
+   }
+  });
 });
+
+// https://blog.bitsrc.io/successfully-throwing-async-errors-with-the-jest-testing-library-fda17261733a

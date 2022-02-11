@@ -16,4 +16,9 @@ describe('2 - Teste a função fecthItem', () => {
     await fetchItem('MLB1615760527');
     expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/items/MLB1615760527');
   });
+
+  it('check if fetchItem function using `MLB1615760527` as an argument has the same data structure as `item` object', async () => {
+    await fetchItem('MLB1615760527');
+    expect(await fetchItem('MLB1615760527')).toEqual(item);
+  });
 });

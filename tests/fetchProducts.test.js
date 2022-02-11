@@ -12,4 +12,10 @@ describe('1 - Teste a função fecthProducts', () => {
     await fetchProducts('computador');
     expect(fetch).toBeCalled()
   });
+
+  it('verify if fetch function with computer as argument uses the endpoint "https://api.mercadolibre.com/sites/MLB/search?q=computador"', async () => {
+    await fetchProducts('computador');
+    expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+  });
+
 });

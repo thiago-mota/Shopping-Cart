@@ -1,7 +1,3 @@
-// const { fetchItem } = require("./helpers/fetchItem");
-
-// const { fetchItem } = require("./helpers/fetchItem");
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -47,7 +43,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  document.querySelector('.cart__items').remove();
+  document.querySelector('.cart__items');
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -57,8 +54,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+const cartItems = document.querySelector('.cart__items');
+
 const cartList = async (itemId) => {
-  const cartItems = document.querySelector('.cart__items');
   const items = await fetchItem(itemId);
 
   const { id, title, price } = items;
@@ -70,13 +68,19 @@ const cartList = async (itemId) => {
   cartItems.appendChild(createCartItemElement(cartDetails));
 };
 
-// const addOnCart = () => {
-//   document.querySelector('');
-// };
-// console.log(addOnCart());
-
-  // console.log(cartList('MLB1341706310'));
-  window.onload = () => { 
-  productList('computador');
-  cartList('MLB1341706310');
+const addItemButton = ({ target }) => {
+  const targetID = target.parentNode.firstChild.innerText;
+  cartList(targetID);
 };
+
+  window.onload = () => { 
+  productList('computador').then(() => {
+    const buttonEvent = document.querySelectorAll('.item__add');
+    buttonEvent.forEach((card) => {
+      card.addEventListener('click', addItemButton);
+    });
+  });
+};
+
+// https://github.com/tryber/sd-019-b-project-shopping-cart/pull/66/files Referenciando o Allan por ter consultado o código dele para tirar dúvidas sobre o funcionamento do botão.
+// entendendo o uso do parent.Node: https://developer.mozilla.org/pt-BR/docs/Web/API/Node/parentNode

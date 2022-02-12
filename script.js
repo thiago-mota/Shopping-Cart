@@ -42,9 +42,9 @@ const productList = async (product) => {
   });
 };
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
 const totalPrice = () => {
   let totalCartPrice = 0;

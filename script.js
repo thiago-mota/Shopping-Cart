@@ -57,7 +57,7 @@ const totalPrice = () => {
 };
 
 // https://developer.mozilla.org/pt-BR/docs/Web/API/Node/childNodes
-// Referenciando o pondaco por ter me inspirado na função dele para construir a soma. https://github.com/tryber/sd-019-b-project-shopping-cart/pull/4/files 
+// Referenciando o pondaco por ter me inspirado na função dele para construir uma soma ao invés de trabalhar com arrays. https://github.com/tryber/sd-019-b-project-shopping-cart/pull/4/files 
 
 const ereaseCart = () => {
   cartItems.innerHTML = '';
@@ -86,10 +86,11 @@ const cartList = async (itemId) => {
     salePrice: price,
   };
   cartItems.appendChild(createCartItemElement(cartDetails));
+  saveCartItems('cartItems', document.querySelector('.cart__items').innerHTML);
   totalPrice();
 };
 
-const addItemButton = ({ target }) => {
+const addToCartBTN = ({ target }) => {
   const targetID = target.parentNode.firstChild.innerText;
   cartList(targetID);
 };
@@ -97,15 +98,18 @@ const addItemButton = ({ target }) => {
 // parent.Node: https://developer.mozilla.org/pt-BR/docs/Web/API/Node/parentNode
 // https://teamtreehouse.com/community/how-does-the-parentnode-method-get-the-parent-of-an-event-element
 
-  window.onload = () => { 
+window.onload = () => {
+  const loadingText = document.querySelector('.loading');
+  
   productList('computador').then(() => {
     const buttonEvent = document.querySelectorAll('.item__add');
     buttonEvent.forEach((card) => {
-      card.addEventListener('click', addItemButton);
-    });
+    card.addEventListener('click', addToCartBTN);
   });
+  loadingText.remove();
+});
 
-   clearCart.addEventListener('click', ereaseCart);
+  clearCart.addEventListener('click', ereaseCart);
 };
 
 // https://github.com/tryber/sd-019-b-project-shopping-cart/pull/66/files Referenciando o Allan por ter consultado o código dele para tirar dúvidas sobre o funcionamento do botão.

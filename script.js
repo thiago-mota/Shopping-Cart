@@ -1,3 +1,5 @@
+const cartItems = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -42,9 +44,20 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const totalPrice = () => {
+  let totalCartPrice = 0;
+
+  cartItems.childNodes.forEach((product) => {
+    const itemPrice = product.innerHTML.split('PRICE: $');
+    totalCartPrice += Number(itemPrice[1]);
+    return totalCartPrice.toFixed(2);
+  });
+};
+// https://developer.mozilla.org/pt-BR/docs/Web/API/Node/childNodes
+
 function cartItemClickListener(event) {
-  document.querySelector('.cart__items');
   event.target.remove();
+  totalPrice();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -54,11 +67,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-const cartItems = document.querySelector('.cart__items');
 
 const cartList = async (itemId) => {
   const items = await fetchItem(itemId);
-
   const { id, title, price } = items;
   const cartDetails = {
     sku: id,
@@ -66,12 +77,16 @@ const cartList = async (itemId) => {
     salePrice: price,
   };
   cartItems.appendChild(createCartItemElement(cartDetails));
+  totalPrice();
 };
 
 const addItemButton = ({ target }) => {
   const targetID = target.parentNode.firstChild.innerText;
   cartList(targetID);
 };
+
+// parent.Node: https://developer.mozilla.org/pt-BR/docs/Web/API/Node/parentNode
+// https://teamtreehouse.com/community/how-does-the-parentnode-method-get-the-parent-of-an-event-element
 
   window.onload = () => { 
   productList('computador').then(() => {
@@ -83,4 +98,3 @@ const addItemButton = ({ target }) => {
 };
 
 // https://github.com/tryber/sd-019-b-project-shopping-cart/pull/66/files Referenciando o Allan por ter consultado o código dele para tirar dúvidas sobre o funcionamento do botão.
-// entendendo o uso do parent.Node: https://developer.mozilla.org/pt-BR/docs/Web/API/Node/parentNode

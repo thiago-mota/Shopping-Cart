@@ -1,4 +1,5 @@
 const cartItems = document.querySelector('.cart__items');
+const clearCart = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -50,10 +51,18 @@ const totalPrice = () => {
   cartItems.childNodes.forEach((product) => {
     const itemPrice = product.innerHTML.split('PRICE: $');
     totalCartPrice += Number(itemPrice[1]);
+    console.log(totalCartPrice);
     return totalCartPrice.toFixed(2);
   });
 };
+
 // https://developer.mozilla.org/pt-BR/docs/Web/API/Node/childNodes
+// Referenciando o pondaco por ter me inspirado na função dele para construir a soma. https://github.com/tryber/sd-019-b-project-shopping-cart/pull/4/files 
+
+const ereaseCart = () => {
+  cartItems.innerHTML = '';
+  totalPrice();
+};
 
 function cartItemClickListener(event) {
   event.target.remove();
@@ -95,6 +104,8 @@ const addItemButton = ({ target }) => {
       card.addEventListener('click', addItemButton);
     });
   });
+
+   clearCart.addEventListener('click', ereaseCart);
 };
 
 // https://github.com/tryber/sd-019-b-project-shopping-cart/pull/66/files Referenciando o Allan por ter consultado o código dele para tirar dúvidas sobre o funcionamento do botão.

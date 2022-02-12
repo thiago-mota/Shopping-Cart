@@ -1,5 +1,6 @@
 const cartItems = document.querySelector('.cart__items');
 const clearCart = document.querySelector('.empty-cart');
+const cartPrice = document.querySelector('.total-price');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -51,9 +52,8 @@ const totalPrice = () => {
   cartItems.childNodes.forEach((product) => {
     const itemPrice = product.innerHTML.split('PRICE: $');
     totalCartPrice += Number(itemPrice[1]);
-    console.log(totalCartPrice);
-    return totalCartPrice.toFixed(2);
   });
+  cartPrice.innerText = totalCartPrice;
 };
 
 // https://developer.mozilla.org/pt-BR/docs/Web/API/Node/childNodes

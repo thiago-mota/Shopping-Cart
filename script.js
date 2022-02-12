@@ -62,11 +62,13 @@ const totalPrice = () => {
 const ereaseCart = () => {
   cartItems.innerHTML = '';
   totalPrice();
+  saveCartItems(cartItems.innerHTML);
 };
 
 function cartItemClickListener(event) {
   event.target.remove();
   totalPrice();
+  saveCartItems(cartItems.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -86,21 +88,27 @@ const cartList = async (itemId) => {
     salePrice: price,
   };
   cartItems.appendChild(createCartItemElement(cartDetails));
-  saveCartItems('cartItems', document.querySelector('.cart__items').innerHTML);
+  saveCartItems(cartItems.innerHTML);
   totalPrice();
 };
 
 const addToCartBTN = ({ target }) => {
   const targetID = target.parentNode.firstChild.innerText;
   cartList(targetID);
+  console.log(cartItems);
 };
 
 // parent.Node: https://developer.mozilla.org/pt-BR/docs/Web/API/Node/parentNode
 // https://teamtreehouse.com/community/how-does-the-parentnode-method-get-the-parent-of-an-event-element
 
+const localStorageSavedItems = () => {
+  cartItems.innerHTML = getSavedCartItems();
+  totalPrice();
+};
+
 window.onload = () => {
   const loadingText = document.querySelector('.loading');
-  
+
   productList('computador').then(() => {
     const buttonEvent = document.querySelectorAll('.item__add');
     buttonEvent.forEach((card) => {
@@ -110,6 +118,9 @@ window.onload = () => {
 });
 
   clearCart.addEventListener('click', ereaseCart);
+  cartItems.addEventListener('click', cartItemClickListener);
+  
+  localStorageSavedItems();
 };
 
 // https://github.com/tryber/sd-019-b-project-shopping-cart/pull/66/files Referenciando o Allan por ter consultado o código dele para tirar dúvidas sobre o funcionamento do botão.
